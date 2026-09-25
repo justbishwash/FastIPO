@@ -507,14 +507,36 @@ function renderApplicationReport(applications) {
   const paginated = filteredApplications.slice(startIndex, startIndex + pageSize);
 
   const rows = paginated.map((entry) => {
-    const statusName = entry.statusName || 'PENDING';
+    const rawStatusName = entry.statusName
+      || entry.allotmentStatusName
+      || entry.applicationStatusName
+      || entry.status
+      || 'PENDING';
+    const normalizedRawStatus = String(rawStatusName).toUpperCase();
+    const hasAllotmentResult = ['isAllotted', 'allotted', 'isAlloted']
+      .find((key) => entry[key] !== undefined && entry[key] !== null);
+    const allotmentResult = hasAllotmentResult ? entry[hasAllotmentResult] : undefined;
+    const isAllotted = allotmentResult === true || String(allotmentResult).toLowerCase() === 'true';
+    const isNotAllotted = allotmentResult === false || String(allotmentResult).toLowerCase() === 'false';
+    const statusName = normalizedRawStatus === 'BLOCKED_APPROVE'
+      ? 'Verified'
+      : normalizedRawStatus === 'TRANSACTION_SUCCESS' && isAllotted
+        ? 'Alloted'
+        : normalizedRawStatus === 'TRANSACTION_SUCCESS' && isNotAllotted
+          ? 'Not Alloted'
+          : rawStatusName;
     const normalizedStatus = String(statusName).toUpperCase();
     const statusTone = normalizedStatus.includes('NOT ALLOT')
       ? 'not-allotted'
       : normalizedStatus.includes('ALLOT')
         ? 'allotted'
         : 'other';
-    const reasonOrRemark = entry.reasonOrRemark || 'No remark available';
+    const reasonOrRemark = entry.reasonOrRemark
+      || entry.reason
+      || entry.remark
+      || entry.remarks
+      || (normalizedRawStatus === 'BLOCKED_APPROVE' ? 'Block Amount Status - Amount Blocked' : '')
+      || (normalizedRawStatus === 'TRANSACTION_SUCCESS' ? 'Block Amount Status - Amount Released' : '');
     const accountName = entry.accountName || 'Unknown account';
     const scrip = entry.scrip || 'N/A';
     const companyName = entry.companyName || 'Unknown company';
@@ -534,7 +556,7 @@ function renderApplicationReport(applications) {
         <td>${applicantFormId}</td>
         <td>
           <div class="application-report-status ${statusTone}">${statusName}</div>
-          <div class="application-report-reason">${reasonOrRemark}</div>
+          ${reasonOrRemark ? `<div class="application-report-reason">${reasonOrRemark}</div>` : ''}
         </td>
       </tr>
     `;
