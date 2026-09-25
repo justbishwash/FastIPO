@@ -1055,52 +1055,6 @@ document.getElementById('add-account-form').addEventListener('submit', async (e)
   }
 });
 
-document.getElementById('export-btn').addEventListener('click', async () => {
-  try {
-    const stored = await cloudLoadVault();
-    if (!stored) {
-      showApplicationToast('error', 'Nothing to export', 'No cloud vault is available.');
-      return;
-    }
-    const blob = new Blob([JSON.stringify(stored)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `meroshare_vault_${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    log("[OK] Cloud vault exported.");
-  } catch (error) {
-    showApplicationToast('error', 'Export failed', error.message);
-  }
-});
-
-document.getElementById('import-btn').addEventListener('click', () => {
-  document.getElementById('import-file').click();
-});
-
-document.getElementById('import-file').addEventListener('change', async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const text = await file.text();
-  try {
-    const importedVault = JSON.parse(text);
-    if (!importedVault.encryptedVault || !importedVault.encryptionKey) {
-      throw new Error("This backup uses the old password-based format.");
-    }
-    vaultEncryptionKey = importedVault.encryptionKey;
-    vault = await decryptData(importedVault.encryptedVault, vaultEncryptionKey);
-    await saveVault();
-    renderAccounts();
-    loadOpenings();
-    log("[OK] Vault imported successfully.");
-  } catch (err) {
-    showApplicationToast('error', 'Import failed', err.message);
-    log("[ERROR] Import failed.");
-  }
-  e.target.value = ''; // Reset input
-});
-
 function showApplicationToast(type, title, message) {
   const container = document.getElementById('app-toasts') || document.getElementById('application-toasts');
   const toast = document.createElement('div');

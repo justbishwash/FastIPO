@@ -741,38 +741,6 @@ body {
 }
 
 
-.welcome-actions {
-
-  display: flex;
-
-  gap: 9px;
-
-}
-
-
-.action-btn {
-
-  height: 39px;
-
-  padding:
-    0 14px;
-
-  border-radius: 8px;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-}
-
-
-.action-btn i {
-
-  margin-right: 6px;
-
-}
-
-
 /* ============================================================
    STAT CARDS
    ============================================================ */
@@ -1318,10 +1286,12 @@ select.custom-input {
 
 .accounts-list {
   width: 100%;
+  overflow-x: auto;
 }
 
 .accounts-table {
   width: 100%;
+  min-width: 760px;
   border-collapse: collapse;
   background: #fff;
 }
@@ -1581,10 +1551,12 @@ select.custom-input {
 
 .application-report-list {
   padding: 18px 22px 18px;
+  overflow-x: auto;
 }
 
 .application-report-table {
   width: 100%;
+  min-width: 820px;
   border-collapse: collapse;
   overflow: hidden;
   border-radius: 12px;
@@ -2478,21 +2450,6 @@ select.custom-input {
 
   }
 
-
-  .welcome-actions {
-
-    width: 100%;
-
-  }
-
-
-  .action-btn {
-
-    flex: 1;
-
-  }
-
-
   .stats-grid {
 
     grid-template-columns:
@@ -2504,6 +2461,63 @@ select.custom-input {
   .card-header-custom {
 
     align-items: flex-start;
+
+  }
+
+  .application-report-toolbar {
+
+    align-items: stretch;
+
+    flex-direction: column;
+
+    padding: 15px;
+
+  }
+
+  .report-filter-wrap,
+  .report-filter-wrap.small-wrap {
+
+    min-width: 0;
+
+    width: 100%;
+
+  }
+
+  .application-report-list {
+
+    padding: 15px;
+
+  }
+
+  .application-report-pagination {
+
+    align-items: stretch;
+
+    flex-direction: column;
+
+  }
+
+  .application-report-pagination-controls {
+
+    justify-content: space-between;
+
+  }
+
+  .opening-row {
+
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+  }
+
+  .opening-dates {
+
+    align-items: flex-start;
+
+    text-align: left;
 
   }
 
@@ -2561,13 +2575,6 @@ select.custom-input {
   }
 
 
-  .welcome-actions {
-
-    flex-direction: column;
-
-  }
-
-
   .stats-grid {
 
     grid-template-columns: 1fr;
@@ -2596,6 +2603,45 @@ select.custom-input {
     display: block;
 
     font-size: 11px;
+
+  }
+
+  .card-header-custom {
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+  }
+
+  .card-title-group {
+
+    min-width: 0;
+
+  }
+
+  .card-title-group h3,
+  .card-title-group p {
+
+    overflow-wrap: anywhere;
+
+  }
+
+  .accounts-table {
+
+    min-width: 700px;
+
+  }
+
+  .application-report-table {
+
+    min-width: 760px;
+
+  }
+
+  .account-table-actions {
+
+    justify-content: flex-start;
 
   }
 
