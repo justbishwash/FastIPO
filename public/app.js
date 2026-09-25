@@ -514,6 +514,7 @@ function renderApplicationReport(applications) {
       : normalizedStatus.includes('ALLOT')
         ? 'allotted'
         : 'other';
+    const reasonOrRemark = entry.reasonOrRemark || 'No remark available';
     const accountName = entry.accountName || 'Unknown account';
     const scrip = entry.scrip || 'N/A';
     const companyName = entry.companyName || 'Unknown company';
@@ -532,7 +533,8 @@ function renderApplicationReport(applications) {
         </td>
         <td>${applicantFormId}</td>
         <td>
-          <span class="application-report-status ${statusTone}">${statusName}</span>
+          <div class="application-report-status ${statusTone}">${statusName}</div>
+          <div class="application-report-reason">${reasonOrRemark}</div>
         </td>
       </tr>
     `;

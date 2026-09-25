@@ -1609,6 +1609,13 @@ select.custom-input {
   font-weight: 700;
 }
 
+.application-report-reason {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
 .application-report-status.allotted {
   color: var(--success);
 }
