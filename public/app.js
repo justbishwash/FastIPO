@@ -979,6 +979,12 @@ document.getElementById('verify-account-btn').addEventListener('click', async ()
   log(`[INFO] Verifying credentials for ${username}...`);
 
   try {
+    const accountTokenKey = `${dpId}:${username}`;
+    if (MeroShareClient.sharedTokenKey !== accountTokenKey) {
+      MeroShareClient.sharedToken = null;
+      MeroShareClient.sharedTokenKey = null;
+    }
+
     const client = new MeroShareClient({ username, password, dpId });
     await client.login();
     const detail = await client.fetchOwnDetail();
