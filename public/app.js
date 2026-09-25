@@ -368,6 +368,12 @@ class MeroShareClient {
     return res.json();
   }
 
+  async fetchApplicantFormDetail(applicantFormId) {
+    const res = await this.authFetch(`${BASE_URL}/applicantForm/report/detail/${applicantFormId}`);
+    if (!res.ok) throw new Error(`Failed to fetch application detail: ${res.status}`);
+    return res.json();
+  }
+
   async fetchIPOs() {
     return (await this.fetchApplicableIssues()).object || [];
   }
@@ -542,6 +548,8 @@ function renderApplicationReport(applications) {
     const companyName = entry.companyName || 'Unknown company';
     const shareTypeName = entry.shareTypeName || 'IPO';
     const applicantFormId = entry.applicantFormId || 'N/A';
+    const appliedKitta = entry.appliedKitta ?? 'N/A';
+    const receivedKitta = entry.receivedKitta ?? 'N/A';
 
     return `
       <tr>
@@ -550,6 +558,8 @@ function renderApplicationReport(applications) {
           <div class="application-report-script">${scrip}</div>
         </td>
         <td>${shareTypeName}</td>
+        <td>${appliedKitta}</td>
+        <td>${receivedKitta}</td>
         <td>
           <span class="application-report-account">${accountName}</span>
         </td>
@@ -571,6 +581,8 @@ function renderApplicationReport(applications) {
         <tr>
           <th>Company</th>
           <th>Type</th>
+          <th>Applied Kitta</th>
+          <th>Received Kitta</th>
           <th>Account</th>
           <th>Application ID</th>
           <th>Status</th>
@@ -625,8 +637,19 @@ async function loadApplicationReport() {
       const client = new MeroShareClient(account);
       const response = await client.fetchApplicantForms();
       const applications = Array.isArray(response.object) ? response.object : [];
+      const detailedApplications = await Promise.all(applications.map(async (item) => {
+        if (!item.applicantFormId) return item;
 
-      mergedReports.push(...applications.map((item) => ({
+        try {
+          const detail = await client.fetchApplicantFormDetail(item.applicantFormId);
+          return { ...item, ...detail };
+        } catch (error) {
+          log(`[WARN] Failed to load detail for application ${item.applicantFormId}: ${error.message}`);
+          return item;
+        }
+      }));
+
+      mergedReports.push(...detailedApplications.map((item) => ({
         ...item,
         accountName: account.name || account.username || 'Unknown account'
       })));
