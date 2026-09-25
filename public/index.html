@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MeroShare Auto Applier</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  >
+
+  <!-- Your custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================================================
+       APP SHELL
+  ========================================================== -->
+
+  <div class="app-shell">
+
+    <!-- =======================================================
+         SIDEBAR
+    ======================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+          <i class="bi bi-graph-up-arrow"></i>
+        </div>
+
+        <div class="brand-text">
+          <h5>MeroShare</h5>
+          <span>Auto Applier</span>
+        </div>
+
+        <button id="sidebar-close-btn" class="sidebar-close-btn" type="button" aria-label="Close menu">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+      </div>
+
+
+      <div class="sidebar-section-label">
+        MAIN MENU
+      </div>
+
+      <nav class="sidebar-nav">
+
+        <a href="#dashboard" data-page="dashboard" class="sidebar-link active">
+          <span class="sidebar-icon">
+            <i class="bi bi-grid-1x2-fill"></i>
+          </span>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#accounts" data-page="accounts" class="sidebar-link">
+          <span class="sidebar-icon">
+            <i class="bi bi-wallet2"></i>
+          </span>
+          <span>Accounts</span>
+        </a>
+
+        <a href="#openings" data-page="openings" class="sidebar-link">
+          <span class="sidebar-icon">
+            <i class="bi bi-megaphone"></i>
+          </span>
+          <span>View All Openings</span>
+        </a>
+
+        <a href="#ipo-application" data-page="ipo" class="sidebar-link">
+          <span class="sidebar-icon">
+            <i class="bi bi-bar-chart-line"></i>
+          </span>
+          <span>IPO Application</span>
+        </a>
+
+        <a href="#application-report" data-page="report" class="sidebar-link">
+          <span class="sidebar-icon">
+            <i class="bi bi-file-earmark-check"></i>
+          </span>
+          <span>Application Report</span>
+        </a>
+
+        <a href="#activity-logs" data-page="logs" class="sidebar-link">
+          <span class="sidebar-icon">
+            <i class="bi bi-clock-history"></i>
+          </span>
+          <span>Activity Logs</span>
+        </a>
+
+      </nav>
+
+
+      <div class="sidebar-bottom">
+
+        <div class="sidebar-version">
+          MeroShare Auto Applier · v1.0
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- =======================================================
+         MAIN CONTENT
+    ======================================================== -->
+
+    <main id="main-app" class="main-content">
+
+      <!-- =====================================================
+           TOP NAVBAR
+      ====================================================== -->
+
+      <header class="top-navbar">
+
+        <div class="navbar-left">
+
+          <button
+            class="mobile-menu-btn"
+            id="mobile-menu-btn"
+            type="button"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+
+          <div>
+
+            <div class="breadcrumb-text">
+              Workspace / Dashboard
+            </div>
+
+            <h1 class="page-title">
+              Dashboard
+            </h1>
+
+          </div>
+
+        </div>
+
+
+        <div class="navbar-right">
+
+          <div class="vault-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+              <strong>Synched</strong>
+              <small>with MeroShare</small>
+            </div>
+
+          </div>
+
+          <div class="navbar-divider"></div>
+
+          <div class="user-profile">
+
+            <div class="user-avatar" id="user-avatar">
+              <img id="user-avatar-image" alt="Google profile photo">
+              <span id="user-avatar-initials">MS</span>
+            </div>
+
+            <div class="user-info">
+              <strong id="user-display-name">My Workspace</strong>
+              <small id="user-email">Personal Account</small>
+            </div>
+
+            <i class="bi bi-chevron-down profile-chevron"></i>
+
+            <div id="user-menu" class="user-menu" hidden>
+              <div class="user-menu-heading">
+                <strong id="menu-user-name">My Workspace</strong>
+                <span id="menu-user-email">Personal Account</span>
+              </div>
+              <button id="logout-btn" type="button" class="user-menu-action">
+                <i class="bi bi-box-arrow-right"></i>
+                Sign out
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- =====================================================
+           PAGE CONTENT
+      ====================================================== -->
+
+      <div class="page-content">
+
+
+        <!-- ===================================================
+             WELCOME HEADER
+        ==================================================== -->
+
+        <section id="accounts" class="welcome-section page-section" data-page="accounts">
+
+          <div>
+
+            <span class="eyebrow">
+              <i class="bi bi-stars"></i>
+              Portfolio Automation
+            </span>
+
+            <h2>
+              Welcome back
+            </h2>
+
+            <p>
+              Manage your MeroShare accounts and automate IPO applications
+              from one focused workspace.
+            </p>
+
+          </div>
+
+          <div class="welcome-actions">
+
+            <button
+              id="export-btn"
+              class="btn btn-outline-primary action-btn"
+            >
+              <i class="bi bi-download"></i>
+              Export Vault
+            </button>
+
+            <button
+              id="import-btn"
+              class="btn btn-primary action-btn"
+            >
+              <i class="bi bi-upload"></i>
+              Import Vault
+            </button>
+
+            <input
+              type="file"
+              id="import-file"
+              class="d-none"
+              accept=".json"
+            >
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             DASHBOARD STAT CARDS
+        ==================================================== -->
+
+        <section id="dashboard" class="stats-grid page-section" data-page="dashboard">
+
+          <div class="stat-card">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon blue">
+                <i class="bi bi-wallet2"></i>
+              </div>
+
+              <span class="stat-badge">
+                Active
+              </span>
+
+            </div>
+
+            <div class="stat-value" id="account-count">
+              0
+            </div>
+
+            <div class="stat-label">
+              Saved Accounts
+            </div>
+
+            <div class="stat-description">
+              MeroShare accounts in your vault
+            </div>
+
+          </div>
+
+
+          <div class="stat-card dashboard-extra">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon green">
+                <i class="bi bi-shield-check"></i>
+              </div>
+
+              <span class="stat-badge green">
+                Ready
+              </span>
+
+            </div>
+
+            <div class="stat-value">
+              AES
+            </div>
+
+            <div class="stat-label">
+              Vault Protection
+            </div>
+
+            <div class="stat-description">
+              Credentials protected locally
+            </div>
+
+          </div>
+
+
+          <div class="stat-card dashboard-extra">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon purple">
+                <i class="bi bi-lightning-charge-fill"></i>
+              </div>
+
+              <span class="stat-badge purple">
+                Ready
+              </span>
+
+            </div>
+
+            <div class="stat-value">
+              IPO
+            </div>
+
+            <div class="stat-label">
+              Application Engine
+            </div>
+
+            <div class="stat-description">
+              Ready to process applications
+            </div>
+
+          </div>
+
+
+          <div class="stat-card dashboard-extra">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon orange">
+                <i class="bi bi-activity"></i>
+              </div>
+
+              <span class="stat-badge orange">
+                Live
+              </span>
+
+            </div>
+
+            <div class="stat-value">
+              <span class="live-indicator"></span>
+              Online
+            </div>
+
+            <div class="stat-label">
+              Automation Status
+            </div>
+
+            <div class="stat-description">
+              System is ready for automation
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon teal">
+                <i class="bi bi-megaphone-fill"></i>
+              </div>
+
+              <span class="stat-badge teal">
+                Live
+              </span>
+
+            </div>
+
+            <div class="stat-value" id="opening-count">
+              --
+            </div>
+
+            <div class="stat-label">
+              Total Openings
+            </div>
+
+            <div class="stat-description">
+              Currently available issues
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <section id="openings" class="dashboard-card mb-4 page-section" data-page="dashboard openings">
+
+          <div class="card-header-custom">
+
+            <div class="card-title-group">
+
+              <div class="section-icon teal">
+                <i class="bi bi-megaphone-fill"></i>
+              </div>
+
+              <div>
+                <h3>Share Openings</h3>
+                <p>Current public issues available in MeroShare.</p>
+              </div>
+
+            </div>
+
+            <span class="header-count" id="openings-status">Waiting for account</span>
+
+          </div>
+
+          <div class="openings-container" id="openings-list">
+            <div class="openings-empty">Unlock your vault to load current openings.</div>
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             ADD ACCOUNT
+        ==================================================== -->
+
+        <div class="modal fade" id="add-account-modal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content account-modal-content">
+        <section id="account-form" class="dashboard-card page-section" data-page="accounts">
+
+          <div class="card-header-custom">
+
+            <div class="card-title-group">
+
+              <div class="section-icon blue">
+                <i class="bi bi-person-plus-fill"></i>
+              </div>
+
+              <div>
+                <h3>Add MeroShare Account</h3>
+                <p>
+                  Connect your account in three quick steps.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="account-stepper" aria-label="Account setup progress">
+            <div class="account-step active" data-account-step="credentials">
+              <span>1</span>
+              <div><strong>Credentials</strong><small>DP, BOID and password</small></div>
+            </div>
+            <div class="account-step-line"></div>
+            <div class="account-step" data-account-step="bank">
+              <span>2</span>
+              <div><strong>Account details</strong><small>Bank, PIN and CRN</small></div>
+            </div>
+          </div>
+
+
+          <div class="card-body-custom">
+
+            <form id="add-account-form">
+
+              <div class="row g-4">
+
+                <div class="col-12 account-credential-field">
+
+                  <label class="form-label">
+                    Username / BOID
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-person"></i>
+
+                    <input
+                      type="text"
+                      id="acc-username"
+                      class="form-control custom-input"
+                      placeholder="Enter MeroShare username / BOID"
+                      required
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-12 account-credential-field">
+
+                  <label class="form-label">
+                    Password
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-key"></i>
+
+                    <input
+                      type="password"
+                      id="acc-password"
+                      class="form-control custom-input"
+                      placeholder="Enter MeroShare password"
+                      required
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-12 account-dp-field">
+
+                  <label class="form-label">
+                    DP ID
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-bank"></i>
+
+                    <input
+                      type="text"
+                      id="acc-dp"
+                      class="form-control custom-input"
+                      list="dp-list"
+                      placeholder="Search DP..."
+                      required
+                    >
+
+                    <datalist id="dp-list"></datalist>
+
+                  </div>
+
+                  <button type="button" id="verify-account-btn" class="btn btn-primary account-verify-btn">
+                
+                    Verify Credentials
+                  </button>
+
+                </div>
+
+
+                <div class="col-12 account-bank-field d-none">
+
+                  <label class="form-label">Bank Name</label>
+
+                  <div class="input-wrapper">
+                    <i class="bi bi-bank"></i>
+                    <input type="text" id="acc-bank-name" class="form-control custom-input" readonly>
+                  </div>
+
+                </div>
+
+
+                <div class="col-12 account-bank-field d-none">
+
+                  <label class="form-label">Bank Account Number</label>
+
+                  <div class="input-wrapper">
+                    <i class="bi bi-credit-card"></i>
+                    <input type="text" id="acc-bank-account" class="form-control custom-input" readonly>
+                  </div>
+
+                </div>
+
+
+                <div class="col-12 account-final-field d-none">
+
+                  <label class="form-label">
+                    CRN Number
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-credit-card"></i>
+
+                    <input
+                      type="text"
+                      id="acc-crn"
+                      class="form-control custom-input"
+                      placeholder="Enter CRN"
+                      required
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-12 account-final-field d-none">
+
+                  <label class="form-label">
+                    Transaction PIN
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-shield-lock"></i>
+
+                    <input
+                      type="password"
+                      id="acc-pin"
+                      class="form-control custom-input"
+                      placeholder="Enter transaction PIN"
+                      required
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-12 d-flex align-items-end account-final-field d-none">
+
+                  <button
+                    type="submit"
+                    id="save-account-btn"
+                    class="btn btn-primary primary-submit-btn w-100"
+                  >
+                    <i class="bi bi-check2-circle"></i>
+                    Save Account
+                  </button>
+
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </section>
+
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ===================================================
+             SAVED ACCOUNTS
+        ==================================================== -->
+
+        <section id="saved-accounts" class="dashboard-card mb-4 page-section" data-page="accounts">
+
+          <div class="card-header-custom">
+
+            <div class="card-title-group">
+
+              <div class="section-icon purple">
+                <i class="bi bi-wallet-fill"></i>
+              </div>
+
+              <div>
+                <h3>Saved Accounts</h3>
+                <p>
+                  Manage your verified MeroShare accounts.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="header-count">
+              <button
+                type="button"
+                class="btn btn-primary add-account-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#add-account-modal"
+              >
+                <i class="bi bi-plus-lg"></i>
+                Add Account
+              </button>
+              <span id="header-account-count">0</span>
+              Accounts
+            </div>
+
+          </div>
+
+
+          <div class="accounts-container">
+
+            <div
+              id="accounts-list"
+              class="accounts-list"
+            ></div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             IPO APPLICATION
+        ==================================================== -->
+
+        <section id="ipo-application" class="dashboard-card mb-4 ipo-card page-section" data-page="ipo">
+
+          <div class="card-header-custom">
+
+            <div class="card-title-group">
+
+              <div class="section-icon green">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+
+              <div>
+                <h3>Apply for IPO</h3>
+                <p>
+                  Submit an IPO application using a verified account.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="card-body-custom">
+
+            <form id="apply-ipo-form">
+
+              <div class="row g-4">
+
+                <div class="col-lg-4 col-md-6">
+
+                  <label class="form-label">
+                    Select Account
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-person-check"></i>
+
+                    <select
+                      id="apply-account"
+                      class="form-select custom-input"
+                      required
+                    >
+                      <option value="">Select an account</option>
+                    </select>
+
+                  </div>
+
+                  <label class="bulk-apply-toggle">
+                    <input type="checkbox" id="apply-all-accounts">
+                    <span>Apply from all saved accounts</span>
+                  </label>
+
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+
+                  <label class="form-label">
+                    Target Script
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-bar-chart"></i>
+
+                    <input
+                      type="text"
+                      id="apply-script"
+                      class="form-control custom-input"
+                      list="opening-script-list"
+                      placeholder="Search an opening..."
+                      required
+                    >
+
+                    <datalist id="opening-script-list"></datalist>
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+
+                  <label class="form-label">
+                    Kitta
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-hash"></i>
+
+                    <input
+                      type="number"
+                      id="apply-kitta"
+                      class="form-control custom-input"
+                      value="10"
+                      required
+                    >
+
+                  </div>
+
+                  <small id="minimum-kitta-hint" class="minimum-kitta-hint"></small>
+
+                </div>
+
+
+                <div id="apply-crn-group" class="col-lg-2 col-md-6">
+
+                  <label class="form-label">
+                    CRN Number
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <i class="bi bi-credit-card-2-front"></i>
+
+                    <input
+                      type="text"
+                      id="apply-crn"
+                      class="form-control custom-input"
+                      required
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-12">
+
+                  <div class="ipo-submit-area">
+
+                    <button
+                      type="submit"
+                      class="btn btn-success apply-btn"
+                    >
+                      <i class="bi bi-send-fill"></i>
+                      <span class="apply-spinner spinner-border spinner-border-sm" aria-hidden="true"></span>
+                      <span id="apply-button-label">Apply Now</span>
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div id="application-progress" class="application-progress d-none" aria-live="polite">
+                <div class="progress-heading">
+                  <span id="application-progress-label">Applying...</span>
+                  <span id="application-progress-count">0 / 0</span>
+                </div>
+                <div class="progress" role="progressbar" aria-label="Application progress">
+                  <div id="application-progress-bar" class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div id="application-toasts" class="application-toasts" aria-live="polite" aria-atomic="false"></div>
+
+            </form>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             APPLICATION REPORT
+        ==================================================== -->
+
+        <section id="application-report" class="dashboard-card mb-4 application-report-card page-section" data-page="report">
+
+          <div class="card-header-custom">
+
+            <div class="card-title-group">
+
+              <div class="section-icon blue">
+                <i class="bi bi-file-earmark-check-fill"></i>
+              </div>
+
+              <div>
+                <h3>Application Report</h3>
+                <p>
+                  Review all IPO applications across your saved accounts.
+                </p>
+              </div>
+
+            </div>
+
+            <span class="header-count" id="application-report-status">0 total</span>
+
+          </div>
+
+          <div class="application-report-toolbar">
+            <div class="report-filter-wrap">
+              <label for="application-report-account-filter">Account</label>
+              <select id="application-report-account-filter" class="form-select custom-input report-filter-select">
+                <option value="all">All Accounts</option>
+              </select>
+            </div>
+            <div class="report-filter-wrap small-wrap">
+              <label for="application-report-page-size">Rows</label>
+              <select id="application-report-page-size" class="form-select custom-input report-filter-select">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="application-report-list" class="application-report-list">
+            <div class="openings-empty">No IPO applications found for your saved accounts.</div>
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             ACTIVITY LOGS
+        ==================================================== -->
+
+        <section id="activity-logs" class="dashboard-card logs-card page-section" data-page="logs">
+
+          <div class="card-header-custom logs-header">
+
+            <div class="card-title-group">
+
+              <div class="section-icon dark">
+                <i class="bi bi-terminal-fill"></i>
+              </div>
+
+              <div>
+                <h3>Activity Logs</h3>
+                <p>
+                  Monitor automation and account activity.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="live-log-status">
+              <span class="live-dot"></span>
+              Live
+            </div>
+
+          </div>
+
+
+          <div
+            id="logs"
+            class="activity-logs"
+          ></div>
+
+        </section>
+
+
+      </div>
+
+      <div id="app-toasts" class="application-toasts app-toasts" aria-live="polite" aria-atomic="false"></div>
+
+
+      <!-- =====================================================
+           FOOTER
+      ====================================================== -->
+
+      <footer class="app-footer">
+
+        <div class="footer-links">
+
+          <span>
+            <i class="bi bi-shield-check"></i>
+            Connected
+          </span>
+
+          <span>
+            <i class="bi bi-dot"></i>
+            v1.0
+          </span>
+
+        </div>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+
+  <!-- =========================================================
+       UNLOCK OVERLAY
+  ========================================================== -->
+
+  <div
+    id="unlock-section"
+    class="unlock-overlay"
+  >
+
+    <div class="unlock-background-shape shape-one"></div>
+    <div class="unlock-background-shape shape-two"></div>
+
+    <div class="unlock-card">
+
+      <div class="unlock-brand">
+
+        <div class="unlock-logo">
+          <i class="bi bi-graph-up-arrow"></i>
+        </div>
+
+        <div>
+          <strong>MeroShare</strong>
+          <span>Auto Applier</span>
+        </div>
+
+      </div>
+
+
+      <div class="unlock-icon">
+
+        <i class="bi bi-shield-lock-fill"></i>
+
+      </div>
+
+
+      <div class="unlock-heading" id="unlock-heading">
+
+        <span class="eyebrow">
+          MEROSHARE WORKSPACE
+        </span>
+
+        <h2>
+          Sign In to Continue
+        </h2>
+
+        <p>
+          Sign in with Google to access your MeroShare vault.
+        </p>
+
+      </div>
+
+
+      <div class="unlock-form" id="google-login-panel">
+
+        <button
+          id="google-sign-in-btn"
+          class="btn btn-outline-primary google-sign-in-btn"
+          type="button"
+        >
+          <i class="bi bi-google"></i>
+          Sign in with Google
+        </button>
+
+        <div id="cloud-auth-status" class="cloud-auth-status" aria-live="polite"></div>
+
+      </div>
+
+
+      <div class="unlock-note" id="unlock-note">
+
+        <i class="bi bi-info-circle-fill"></i>
+
+        <span>
+          Your Google account controls access to your vault.
+        </span>
+
+      </div>
+
+
+      <div class="unlock-footer">
+
+        <span>
+          <i class="bi bi-shield-check"></i>
+          Your credentials stay protected
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       EDIT ACCOUNT MODAL
+  ========================================================== -->
+
+  <div
+    class="modal fade"
+    id="editAccountModal"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content professional-modal">
+
+        <div class="modal-header">
+
+          <div class="modal-title-wrapper">
+
+            <div class="modal-icon">
+              <i class="bi bi-pencil-square"></i>
+            </div>
+
+            <div>
+              <h5 class="modal-title">
+                Edit Account
+              </h5>
+
+              <span>
+                Update account credentials
+              </span>
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+          <input
+            type="hidden"
+            id="edit-idx"
+          >
+
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Username / BOID
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="bi bi-person"></i>
+
+              <input
+                type="text"
+                id="edit-username"
+                class="form-control custom-input"
+                readonly
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              New Password
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="bi bi-key"></i>
+
+              <input
+                type="password"
+                id="edit-password"
+                class="form-control custom-input"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              New Transaction PIN
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="bi bi-shield-lock"></i>
+
+              <input
+                type="password"
+                id="edit-pin"
+                class="form-control custom-input"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              CRN Number
+            </label>
+
+            <div class="input-wrapper">
+
+              <i class="bi bi-credit-card"></i>
+
+              <input
+                type="text"
+                id="edit-crn"
+                class="form-control custom-input"
+                required
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-light modal-cancel-btn"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="saveEditedAccount()"
+          >
+            <i class="bi bi-check2-circle"></i>
+            Verify & Save Changes
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       BOOTSTRAP JS
+  ========================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+  <!-- Your existing application logic -->
+  <script src="app.js"></script>
+
+
+  <!-- =========================================================
+       UI-ONLY JAVASCRIPT
+       Does not modify your application logic.
+  ========================================================== -->
+
+  <script>
+
+    const mobileMenuBtn =
+      document.getElementById("mobile-menu-btn");
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+    const sidebarCloseBtn =
+      document.getElementById("sidebar-close-btn");
+
+    if (mobileMenuBtn && sidebar) {
+
+      mobileMenuBtn.addEventListener("click", () => {
+
+        sidebar.classList.toggle("mobile-open");
+
+      });
+
+    }
+
+    if (sidebarCloseBtn && sidebar) {
+      sidebarCloseBtn.addEventListener("click", () => {
+        sidebar.classList.remove("mobile-open");
+      });
+    }
+
+
+    const pageTitles = {
+      dashboard: "Dashboard",
+      accounts: "Accounts",
+      openings: "View All Openings",
+      ipo: "IPO Application",
+      report: "Application Report",
+      logs: "Activity Logs"
+    };
+
+    function showPage(page) {
+      document.querySelectorAll(".page-section").forEach(section => {
+        const pages = (section.dataset.page || "").split(" ");
+        section.classList.toggle("page-hidden", !pages.includes(page));
+      });
+
+      document.querySelectorAll(".sidebar-link[data-page]").forEach(link => {
+        link.classList.toggle("active", link.dataset.page === page);
+      });
+
+      const title = pageTitles[page] || "Dashboard";
+      const pageTitle = document.querySelector(".page-title");
+      const breadcrumb = document.querySelector(".breadcrumb-text");
+      if (pageTitle) pageTitle.textContent = title;
+      if (breadcrumb) breadcrumb.textContent = `Workspace / ${title}`;
+    }
+
+
+    document.querySelectorAll(".sidebar-link").forEach(link => {
+
+      link.addEventListener("click", () => {
+
+        if (link.dataset.page) {
+          showPage(link.dataset.page);
+        }
+
+        document
+          .querySelectorAll(".sidebar-link")
+          .forEach(item => item.classList.remove("active"));
+
+        link.classList.add("active");
+
+        if (window.innerWidth <= 991) {
+
+          sidebar.classList.remove("mobile-open");
+
+        }
+
+      });
+
+    });
+
+    showPage("dashboard");
+
+
+    /*
+      Optional UI counter observer.
+
+      This only updates dashboard counters based on the
+      existing #accounts-list content. It does not interfere
+      with your existing app.js functionality.
+    */
+
+    const accountList =
+      document.getElementById("accounts-list");
+
+    const accountCount =
+      document.getElementById("account-count");
+
+    const headerAccountCount =
+      document.getElementById("header-account-count");
+
+
+    function updateAccountCounter() {
+
+      if (!accountList) return;
+
+      const count =
+        accountList.querySelectorAll("tbody tr").length ||
+        accountList.querySelectorAll(".account-row").length ||
+        0;
+
+      if (accountCount) {
+        accountCount.textContent = count;
+      }
+
+      if (headerAccountCount) {
+        headerAccountCount.textContent = count;
+      }
+
+    }
+
+
+    if (accountList) {
+
+      const observer =
+        new MutationObserver(updateAccountCounter);
+
+      observer.observe(accountList, {
+        childList: true,
+        subtree: true
+      });
+
+      updateAccountCounter();
+
+    }
+
+  </script>
+
+</body>
+</html>
