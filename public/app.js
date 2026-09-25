@@ -249,7 +249,10 @@ class MeroShareClient {
     this.password = password;
     this.dpId = dpId;
     this.pin = pin;
-    this.token = MeroShareClient.sharedToken;
+    this.accountTokenKey = `${this.dpId || ''}:${this.username || ''}`;
+    this.token = MeroShareClient.sharedTokenKey === this.accountTokenKey
+      ? MeroShareClient.sharedToken
+      : null;
   }
 
   async fetchClientId() {
@@ -263,7 +266,7 @@ class MeroShareClient {
   }
 
   async login() {
-    if (MeroShareClient.sharedToken) {
+    if (this.token && MeroShareClient.sharedTokenKey === this.accountTokenKey) {
       this.token = MeroShareClient.sharedToken;
       return this.token;
     }
@@ -282,12 +285,14 @@ class MeroShareClient {
     if (!this.token) throw new Error("No authorization token received!");
 
     MeroShareClient.sharedToken = this.token;
-    MeroShareClient.sharedTokenKey = `${this.dpId || ''}:${this.username || ''}`;
+    MeroShareClient.sharedTokenKey = this.accountTokenKey;
     return this.token;
   }
 
   async authFetch(url, options = {}) {
-    if (!this.token && MeroShareClient.sharedToken) {
+    if (!this.token
+      && MeroShareClient.sharedTokenKey === this.accountTokenKey
+      && MeroShareClient.sharedToken) {
       this.token = MeroShareClient.sharedToken;
     }
     if (!this.token) await this.login();
