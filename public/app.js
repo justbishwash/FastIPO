@@ -485,10 +485,9 @@ function populateApplicationReportFilters() {
 
 function renderApplicationReport(applications) {
   const list = document.getElementById('application-report-list');
-  const status = document.getElementById('application-report-status');
   const filter = document.getElementById('application-report-account-filter');
   const pageSizeSelector = document.getElementById('application-report-page-size');
-  if (!list || !status) return;
+  if (!list) return;
 
   const selectedAccount = filter ? filter.value || 'all' : 'all';
   applicationReportState.accountFilter = selectedAccount;
@@ -496,8 +495,6 @@ function renderApplicationReport(applications) {
   const filteredApplications = selectedAccount === 'all'
     ? applications
     : applications.filter((entry) => (entry.accountName || '').toLowerCase() === selectedAccount.toLowerCase());
-
-  status.textContent = `${filteredApplications.length} total`;
 
   if (!filteredApplications.length) {
     list.innerHTML = '<div class="openings-empty">No IPO applications found for your saved accounts.</div>';
@@ -547,7 +544,6 @@ function renderApplicationReport(applications) {
     const scrip = entry.scrip || 'N/A';
     const companyName = entry.companyName || 'Unknown company';
     const shareTypeName = entry.shareTypeName || 'IPO';
-    const applicantFormId = entry.applicantFormId || 'N/A';
     const appliedKitta = entry.appliedKitta ?? 'N/A';
     const receivedKitta = entry.receivedKitta ?? 'N/A';
 
@@ -563,7 +559,6 @@ function renderApplicationReport(applications) {
         <td>
           <span class="application-report-account">${accountName}</span>
         </td>
-        <td>${applicantFormId}</td>
         <td>
           <div class="application-report-status ${statusTone}">${statusName}</div>
           ${reasonOrRemark ? `<div class="application-report-reason">${reasonOrRemark}</div>` : ''}
@@ -584,7 +579,6 @@ function renderApplicationReport(applications) {
           <th>Applied Kitta</th>
           <th>Received Kitta</th>
           <th>Account</th>
-          <th>Application ID</th>
           <th>Status</th>
         </tr>
       </thead>
