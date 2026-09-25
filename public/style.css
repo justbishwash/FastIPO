@@ -1601,35 +1601,24 @@ select.custom-input {
 }
 
 .application-report-account {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 999px;
-  padding: 6px 8px;
-  background: #eef4ff;
-  color: var(--primary);
+  color: var(--heading);
   font-weight: 600;
 }
 
 .application-report-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 9px;
-  border-radius: 999px;
-  font-size: 11px;
   font-weight: 700;
-  background: #eef2ff;
-  color: var(--primary-dark);
 }
 
-.application-report-status.verified {
-  background: rgba(22, 163, 74, 0.12);
+.application-report-status.allotted {
   color: var(--success);
 }
 
-.application-report-status i {
-  font-size: 12px;
+.application-report-status.not-allotted {
+  color: #dc2626;
+}
+
+.application-report-status.other {
+  color: #ca8a04;
 }
 
 .application-report-pagination {

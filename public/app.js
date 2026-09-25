@@ -508,7 +508,12 @@ function renderApplicationReport(applications) {
 
   const rows = paginated.map((entry) => {
     const statusName = entry.statusName || 'PENDING';
-    const isVerified = String(statusName).toUpperCase().includes('BLOCKED_APPROVE');
+    const normalizedStatus = String(statusName).toUpperCase();
+    const statusTone = normalizedStatus.includes('NOT ALLOT')
+      ? 'not-allotted'
+      : normalizedStatus.includes('ALLOT')
+        ? 'allotted'
+        : 'other';
     const accountName = entry.accountName || 'Unknown account';
     const scrip = entry.scrip || 'N/A';
     const companyName = entry.companyName || 'Unknown company';
@@ -523,17 +528,11 @@ function renderApplicationReport(applications) {
         </td>
         <td>${shareTypeName}</td>
         <td>
-          <span class="application-report-account">
-            <i class="bi bi-person-badge"></i>
-            ${accountName}
-          </span>
+          <span class="application-report-account">${accountName}</span>
         </td>
         <td>${applicantFormId}</td>
         <td>
-          <span class="application-report-status ${isVerified ? 'verified' : ''}">
-            ${isVerified ? '<i class="bi bi-check-circle-fill"></i>' : '<i class="bi bi-hourglass-split"></i>'}
-            ${isVerified ? 'Verified' : statusName}
-          </span>
+          <span class="application-report-status ${statusTone}">${statusName}</span>
         </td>
       </tr>
     `;
