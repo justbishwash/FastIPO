@@ -207,8 +207,10 @@ function enterApplication() {
   document.getElementById('unlock-section').classList.add('d-none');
   document.getElementById('main-app').classList.remove('d-none');
   renderAccounts();
-  loadOpenings();
-  loadApplicationReport();
+  window.setTimeout(async () => {
+    await loadOpenings();
+    await loadApplicationReport();
+  }, 1000);
 }
 
 async function openCloudVault() {
@@ -739,7 +741,6 @@ function renderAccounts() {
   if (!vault.length) {
     list.innerHTML = '<div class="openings-empty">No saved accounts yet. Add your first MeroShare account.</div>';
     select.innerHTML = '<option value="">Select an account</option>';
-    loadApplicationReport();
     return;
   }
 
@@ -815,7 +816,6 @@ function renderAccounts() {
     select.appendChild(option);
   });
 
-  loadApplicationReport();
 }
 
 function getPrimaryAccount() {
@@ -829,6 +829,7 @@ window.setPrimaryAccount = async function(idx) {
   await saveVault();
   renderAccounts();
   loadOpenings();
+  loadApplicationReport();
 };
 
 function populateOpeningPicker(openings) {
@@ -914,10 +915,12 @@ window.removeAccount = function(idx) {
   if (vault.length && !vault.some((account) => account.primary)) vault[0].primary = true;
   saveVault().then(() => {
     renderAccounts();
+    loadApplicationReport();
     showApplicationToast('success', 'Account removed', `${removedAccount.name || removedAccount.username} was removed.`);
   }).catch((error) => {
     vault.splice(idx, 0, removedAccount);
     renderAccounts();
+    loadApplicationReport();
     showApplicationToast('error', 'Account not removed', error.message);
   });
 };
@@ -1044,6 +1047,7 @@ document.getElementById('add-account-form').addEventListener('submit', async (e)
     await saveVault();
     renderAccounts();
     loadOpenings();
+    loadApplicationReport();
     document.getElementById('add-account-form').reset();
     resetAccountModal();
     bootstrap.Modal.getOrCreateInstance(document.getElementById('add-account-modal')).hide();
