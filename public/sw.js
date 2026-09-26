@@ -1,4 +1,5 @@
-const CACHE_NAME = 'meroshare-shell-v1';
+const CACHE_NAME = 'fastipo-shell-v1';
+const LEGACY_CACHE_PREFIX = 'meroshare-shell-';
 const SHELL_FILES = [
   './index.html',
   './style.css',
@@ -24,7 +25,9 @@ self.addEventListener('activate', (event) => {
     caches.keys()
       .then((cacheNames) => Promise.all(
         cacheNames
-          .filter((cacheName) => cacheName.startsWith('meroshare-shell-') && cacheName !== CACHE_NAME)
+          .filter((cacheName) => (
+            cacheName.startsWith('fastipo-shell-') || cacheName.startsWith(LEGACY_CACHE_PREFIX)
+          ) && cacheName !== CACHE_NAME)
           .map((cacheName) => caches.delete(cacheName))
       ))
       .then(() => self.clients.claim())

@@ -3,7 +3,7 @@ const installButton = document.getElementById('pwa-install-button');
 const dismissButton = document.getElementById('pwa-install-dismiss');
 const installCopy = document.getElementById('pwa-install-copy');
 const iosHelp = document.getElementById('pwa-ios-help');
-const dismissalKey = 'meroshare-pwa-install-dismissed-until';
+const dismissalKey = 'fastipo-pwa-install-dismissed-until';
 let installPromptEvent = null;
 
 function isIosDevice() {

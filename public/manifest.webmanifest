@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "MeroShare Auto Applier",
-  "short_name": "MeroShare",
+  "name": "FastIPO",
+  "short_name": "FastIPO",
   "description": "Manage MeroShare accounts and IPO applications.",
   "start_url": "./",
   "scope": "./",

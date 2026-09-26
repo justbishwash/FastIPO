@@ -1,5 +1,5 @@
 /* ============================================================
-   MEROSHARE AUTO APPLIER
+  FASTIPO
    Professional Financial Dashboard
    ============================================================ */
 
@@ -2672,7 +2672,9 @@ select.custom-input {
 
   .header-count {
 
-    display: none;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
 
   }
 
@@ -3451,6 +3453,12 @@ select.custom-input {
 
   background: rgba(255,255,255,.08);
 
+}
+
+@media (max-width: 991px) {
+  .sidebar .sidebar-close-btn {
+    display: inline-flex;
+  }
 }
 
 
