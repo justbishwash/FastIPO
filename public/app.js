@@ -80,6 +80,18 @@ function setCloudAuthStatus(message, isError = false) {
   status.classList.toggle('error', isError);
 }
 
+function showAuthLoadingScreen() {
+  document.getElementById('auth-loading-screen').classList.remove('d-none');
+  document.getElementById('unlock-section').classList.add('d-none');
+  document.getElementById('main-app').classList.add('d-none');
+}
+
+function showLoginScreen() {
+  document.getElementById('auth-loading-screen').classList.add('d-none');
+  document.getElementById('unlock-section').classList.remove('d-none');
+  document.getElementById('main-app').classList.add('d-none');
+}
+
 function updateUserProfile(user) {
   const name = document.getElementById('user-display-name');
   const email = document.getElementById('user-email');
@@ -135,6 +147,7 @@ async function signOutUser() {
 function initCloudVault() {
   if (!isFirebaseConfigured()) {
     setCloudAuthStatus('Firebase is not configured. Google sign-in is unavailable.', true);
+    showLoginScreen();
     return;
   }
 
@@ -148,9 +161,11 @@ function initCloudVault() {
       updateUserProfile(user);
       if (!user) {
         setCloudAuthStatus('Sign in to sync your vault across devices.');
+        showLoginScreen();
         return;
       }
 
+      showAuthLoadingScreen();
       setCloudAuthStatus(`Signed in as ${user.email || user.displayName || 'Google user'}.`);
       try {
         if (!vaultOpenPromise) {
@@ -159,13 +174,18 @@ function initCloudVault() {
         await vaultOpenPromise;
       } catch (error) {
         setCloudAuthStatus(`Signed in, but vault could not be opened: ${error.message}`, true);
+        showLoginScreen();
       } finally {
         vaultOpenPromise = null;
       }
+    }, (error) => {
+      setCloudAuthStatus(`Could not check sign-in status: ${error.message}`, true);
+      showLoginScreen();
     });
   } catch (error) {
     setCloudAuthStatus('Cloud backup is unavailable. Local vault remains active.', true);
     log(`[ERROR] Firebase setup failed: ${error.message}`);
+    showLoginScreen();
   }
 }
 
@@ -204,6 +224,7 @@ async function cloudSaveVault(encryptedVault, encryptionKey) {
 }
 
 function enterApplication() {
+  document.getElementById('auth-loading-screen').classList.add('d-none');
   document.getElementById('unlock-section').classList.add('d-none');
   document.getElementById('main-app').classList.remove('d-none');
   renderAccounts();

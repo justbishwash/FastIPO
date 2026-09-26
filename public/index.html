@@ -40,6 +40,14 @@
 
 <body>
 
+  <div id="auth-loading-screen" class="auth-loading-screen" role="status" aria-live="polite" aria-busy="true">
+    <div class="auth-loading-content">
+      <img src="fastipo.png" alt="" width="48" height="48">
+      <span class="auth-loading-spinner" aria-hidden="true"></span>
+      <p>Checking your account...</p>
+    </div>
+  </div>
+
   <!-- =========================================================
        APP SHELL
   ========================================================== -->
@@ -136,7 +144,7 @@
          MAIN CONTENT
     ======================================================== -->
 
-    <main id="main-app" class="main-content">
+    <main id="main-app" class="main-content d-none">
 
       <!-- =====================================================
            TOP NAVBAR
@@ -1001,89 +1009,61 @@
 
   <div
     id="unlock-section"
-    class="unlock-overlay"
+    class="unlock-overlay d-none"
   >
 
-    <div class="unlock-background-shape shape-one"></div>
-    <div class="unlock-background-shape shape-two"></div>
-
-    <div class="unlock-card">
-
-      <div class="unlock-brand">
-
-        <div class="unlock-logo">
-          <i class="bi bi-graph-up-arrow"></i>
+    <section class="unlock-card" aria-label="FastIPO sign in">
+      <aside class="unlock-brand-panel">
+        <div class="unlock-brand">
+          <img src="fastipo.png" alt="" width="48" height="48">
+          <div>
+            <strong>FastIPO</strong>
+            <span>IPO Made Simple</span>
+          </div>
         </div>
 
-        <div>
-          <strong>FastIPO</strong>
-          <span>IPO Made Simple</span>
+        <div class="unlock-brand-copy">
+          <span class="unlock-kicker">YOUR IPO WORKSPACE</span>
+          <h1>Stay on top of every opening.</h1>
+          <p>Review public issues and manage applications across your verified MeroShare accounts.</p>
         </div>
 
+        <div class="unlock-brand-foot">
+          <i class="bi bi-shield-lock" aria-hidden="true"></i>
+          <span>Account access secured by Google</span>
+        </div>
+      </aside>
+
+      <div class="unlock-main-panel">
+        <div class="unlock-heading" id="unlock-heading">
+          <span class="unlock-kicker">WELCOME BACK</span>
+          <h2>Sign in to FastIPO</h2>
+          <p>Use your Google account to open your workspace and access your vault.</p>
+        </div>
+
+        <div class="unlock-form" id="google-login-panel">
+          <button
+            id="google-sign-in-btn"
+            class="btn google-sign-in-btn"
+            type="button"
+          >
+            <i class="bi bi-google" aria-hidden="true"></i>
+            Continue with Google
+          </button>
+          <div id="cloud-auth-status" class="cloud-auth-status" aria-live="polite"></div>
+        </div>
+
+        <div class="unlock-note" id="unlock-note">
+          <i class="bi bi-lock-fill" aria-hidden="true"></i>
+          <span>Your Google account controls access to your vault.</span>
+        </div>
+
+        <div class="unlock-footer">
+          <i class="bi bi-shield-check" aria-hidden="true"></i>
+          <span>Your credentials stay protected</span>
+        </div>
       </div>
-
-
-      <div class="unlock-icon">
-
-        <i class="bi bi-shield-lock-fill"></i>
-
-      </div>
-
-
-      <div class="unlock-heading" id="unlock-heading">
-
-        <span class="eyebrow">
-          MEROSHARE 
-        </span>
-
-        <h2>
-          Sign In to Continue
-        </h2>
-
-        <p>
-          Sign in with Google to access your MeroShare vault.
-        </p>
-
-      </div>
-
-
-      <div class="unlock-form" id="google-login-panel">
-
-        <button
-          id="google-sign-in-btn"
-          class="btn btn-outline-primary google-sign-in-btn"
-          type="button"
-        >
-          <i class="bi bi-google"></i>
-          Sign in with Google
-        </button>
-
-        <div id="cloud-auth-status" class="cloud-auth-status" aria-live="polite"></div>
-
-      </div>
-
-
-      <div class="unlock-note" id="unlock-note">
-
-        <i class="bi bi-info-circle-fill"></i>
-
-        <span>
-          Your Google account controls access to your vault.
-        </span>
-
-      </div>
-
-
-      <div class="unlock-footer">
-
-        <span>
-          <i class="bi bi-shield-check"></i>
-          Your credentials stay protected
-        </span>
-
-      </div>
-
-    </div>
+    </section>
 
   </div>
 
@@ -1288,7 +1268,7 @@
     <script src="firebase-config.js"></script>
 
   <!-- Your existing application logic -->
-  <script src="app.js"></script>
+  <script src="app.js?v=auth-loading-1"></script>
   <script src="pwa.js"></script>
 
 

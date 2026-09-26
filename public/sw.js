@@ -1,9 +1,9 @@
-const CACHE_NAME = 'fastipo-shell-v1';
+const CACHE_NAME = 'fastipo-shell-v2';
 const LEGACY_CACHE_PREFIX = 'meroshare-shell-';
 const SHELL_FILES = [
   './index.html',
   './style.css',
-  './app.js',
+  './app.js?v=auth-loading-1',
   './pwa.js',
   './firebase-config.js',
   './manifest.webmanifest',
