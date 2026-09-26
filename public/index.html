@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d1728">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MeroShare Auto Applier">
 
   <title>MeroShare Auto Applier</title>
 
   <link rel="icon" type="image/png" href="fastipo.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
 
   <!-- Bootstrap -->
   <link
@@ -1253,6 +1259,24 @@
   </div>
 
 
+  <aside id="pwa-install-banner" class="pwa-install-banner" aria-live="polite" hidden>
+    <div class="pwa-install-icon"><i class="bi bi-download" aria-hidden="true"></i></div>
+    <div class="pwa-install-content">
+      <strong>Install MeroShare Auto Applier</strong>
+      <span id="pwa-install-copy">Get quick access from your home screen or desktop.</span>
+      <div id="pwa-ios-help" class="pwa-ios-help" hidden>
+        Tap the Share button, choose <strong>Add to Home Screen</strong>, then tap <strong>Add</strong>.
+      </div>
+    </div>
+    <div class="pwa-install-actions">
+      <button id="pwa-install-button" class="pwa-install-action" type="button">Install</button>
+      <button id="pwa-install-dismiss" class="pwa-install-dismiss" type="button" aria-label="Dismiss install prompt">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+    </div>
+  </aside>
+
+
   <!-- =========================================================
        BOOTSTRAP JS
   ========================================================== -->
@@ -1265,6 +1289,7 @@
 
   <!-- Your existing application logic -->
   <script src="app.js"></script>
+  <script src="pwa.js"></script>
 
 
   <!-- =========================================================
