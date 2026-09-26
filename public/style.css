@@ -529,10 +529,28 @@ body {
 
   border-radius: 50%;
 
-  background: #22c55e;
+  background: #94a3b8;
+  box-shadow: 0 0 0 4px rgba(148, 163, 184, .12);
 
-  box-shadow:
-    0 0 0 4px rgba(34,197,94,0.10);
+}
+
+
+.vault-status.is-online .status-dot {
+  background: #16a34a;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, .12);
+
+}
+
+
+.vault-status.is-offline .status-dot {
+  background: #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, .12);
+
+}
+
+
+.vault-status.is-offline strong {
+  color: #b91c1c;
 
 }
 
@@ -2426,10 +2444,30 @@ select.custom-input {
   }
 
 
-  .vault-status,
   .navbar-divider {
 
     display: none;
+
+  }
+
+
+  .vault-status {
+
+    gap: 7px;
+
+  }
+
+
+  .vault-status strong {
+
+    font-size: 9px;
+
+  }
+
+
+  .vault-status small {
+
+    font-size: 8px;
 
   }
 

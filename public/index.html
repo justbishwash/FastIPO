@@ -179,13 +179,13 @@
 
         <div class="navbar-right">
 
-          <div class="vault-status">
+          <div id="mero-share-connection-status" class="vault-status" role="status" aria-live="polite">
 
             <span class="status-dot"></span>
 
             <div>
-              <strong>Synched</strong>
-              <small>with MeroShare</small>
+              <strong id="mero-share-connection-label">Checking...</strong>
+              <small id="mero-share-connection-detail">MeroShare connection</small>
             </div>
 
           </div>
@@ -1268,7 +1268,7 @@
     <script src="firebase-config.js"></script>
 
   <!-- Your existing application logic -->
-  <script src="app.js?v=auth-loading-1"></script>
+  <script src="app.js?v=connection-status-1"></script>
   <script src="pwa.js"></script>
 
 

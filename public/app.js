@@ -26,6 +26,40 @@ function log(msg) {
   logs.scrollTop = logs.scrollHeight;
 }
 
+function setMeroShareConnectionStatus(isConnected) {
+  const status = document.getElementById('mero-share-connection-status');
+  status.classList.toggle('is-online', isConnected);
+  status.classList.toggle('is-offline', !isConnected);
+  document.getElementById('mero-share-connection-label').textContent = isConnected
+    ? 'Connected'
+    : 'Connection Failed';
+  document.getElementById('mero-share-connection-detail').textContent = isConnected
+    ? 'to MeroShare'
+    : 'MeroShare unavailable';
+}
+
+async function checkMeroShareConnection() {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const response = await fetch(PROXY_URL, {
+      method: 'GET',
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    setMeroShareConnectionStatus(response.status === 200);
+  } catch {
+    setMeroShareConnectionStatus(false);
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
+window.addEventListener('online', checkMeroShareConnection);
+window.addEventListener('offline', () => setMeroShareConnectionStatus(false));
+window.setInterval(checkMeroShareConnection, 60000);
+
 // ==========================================
 // Web Crypto API (AES-256-GCM)
 // ==========================================
@@ -1228,6 +1262,7 @@ document.addEventListener('click', (event) => {
   if (!event.target.closest('.user-profile')) document.getElementById('user-menu').hidden = true;
 });
 initCloudVault();
+checkMeroShareConnection();
 loadDPs();
 
 document.getElementById('apply-account').addEventListener('change', function() {
