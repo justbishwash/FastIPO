@@ -2520,25 +2520,6 @@ select.custom-input {
 
   }
 
-  .opening-row {
-
-    align-items: flex-start;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-  }
-
-  .opening-dates {
-
-    align-items: flex-start;
-
-    text-align: left;
-
-  }
-
-
   .ipo-submit-area {
 
     align-items: flex-start;
@@ -2831,6 +2812,25 @@ select.custom-input {
 
   text-align: right;
 
+}
+
+@media (max-width: 768px) {
+  .opening-row {
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .opening-row > div,
+  .opening-dates {
+    width: 100%;
+  }
+
+  .opening-dates {
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 
 
