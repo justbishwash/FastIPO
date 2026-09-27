@@ -11,6 +11,16 @@ function isIosDevice() {
     || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 }
 
+if (isIosDevice()) {
+  const preventPinchZoom = (event) => event.preventDefault();
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach((eventName) => {
+    document.addEventListener(eventName, preventPinchZoom, { passive: false });
+  });
+  document.addEventListener('touchmove', (event) => {
+    if (event.touches.length > 1) event.preventDefault();
+  }, { passive: false });
+}
+
 function isInstalled() {
   return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0d1728">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -162,15 +162,14 @@
             <i class="bi bi-list"></i>
           </button>
 
-          <div>
+          <div class="page-title-group">
 
-            <div class="breadcrumb-text">
-              
+            <img class="page-title-mark" src="fastipo.png" alt="" width="28" height="28">
+
+            <div class="page-title-copy">
+              <div class="breadcrumb-text"></div>
+              <h1 class="page-title">Dashboard</h1>
             </div>
-
-            <h1 class="page-title">
-              Dashboard
-            </h1>
 
           </div>
 
@@ -1008,6 +1007,58 @@
 
       </footer>
 
+      <nav class="mobile-bottom-nav" aria-label="Main navigation">
+        <a href="#dashboard" class="mobile-bottom-link active" data-page="dashboard">
+          <i class="bi bi-grid-1x2-fill" aria-hidden="true"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#accounts" class="mobile-bottom-link" data-page="accounts">
+          <i class="bi bi-wallet2" aria-hidden="true"></i>
+          <span>Accounts</span>
+        </a>
+        <a href="#ipo-application" class="mobile-bottom-link" data-page="ipo">
+          <i class="bi bi-bar-chart-line" aria-hidden="true"></i>
+          <span>Apply IPO</span>
+        </a>
+        <button type="button" class="mobile-bottom-link" id="mobile-more-trigger" aria-expanded="false" aria-controls="mobile-more-overlay">
+          <i class="bi bi-three-dots" aria-hidden="true"></i>
+          <span>More</span>
+        </button>
+      </nav>
+
+      <div class="mobile-more-overlay" id="mobile-more-overlay" aria-hidden="true">
+        <button type="button" class="mobile-more-scrim" data-close-more aria-label="Close more menu"></button>
+        <section class="mobile-more-sheet" role="dialog" aria-modal="true" aria-labelledby="mobile-more-title">
+          <div class="mobile-more-handle" aria-hidden="true"></div>
+          <header class="mobile-more-header">
+            <div>
+              <span>FASTIPO</span>
+              <h2 id="mobile-more-title">More</h2>
+            </div>
+            <button type="button" class="mobile-more-close" data-close-more aria-label="Close more menu">
+              <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+          </header>
+          <nav class="mobile-more-links" aria-label="More destinations">
+            <a href="#openings" class="mobile-more-link" data-page="openings">
+              <span class="mobile-more-icon"><i class="bi bi-megaphone" aria-hidden="true"></i></span>
+              <span>View All Openings</span>
+              <i class="bi bi-chevron-right" aria-hidden="true"></i>
+            </a>
+            <a href="#application-report" class="mobile-more-link" data-page="report">
+              <span class="mobile-more-icon"><i class="bi bi-file-earmark-check" aria-hidden="true"></i></span>
+              <span>Application Report</span>
+              <i class="bi bi-chevron-right" aria-hidden="true"></i>
+            </a>
+            <a href="#activity-logs" class="mobile-more-link" data-page="logs">
+              <span class="mobile-more-icon"><i class="bi bi-clock-history" aria-hidden="true"></i></span>
+              <span>Activity Logs</span>
+              <i class="bi bi-chevron-right" aria-hidden="true"></i>
+            </a>
+          </nav>
+        </section>
+      </div>
+
     </main>
 
   </div>
@@ -1023,32 +1074,13 @@
   >
 
     <section class="unlock-card" aria-label="FastIPO sign in">
-      <aside class="unlock-brand-panel">
-        <div class="unlock-brand">
-          <img src="fastipo.png" alt="" width="48" height="48">
-          <div>
-            <strong>FastIPO</strong>
-            <span>IPO Made Simple</span>
-          </div>
-        </div>
-
-        <div class="unlock-brand-copy">
-          <span class="unlock-kicker">YOUR IPO WORKSPACE</span>
-          <h1>Stay on top of every opening.</h1>
-          <p>Review public issues and manage applications across your verified MeroShare accounts.</p>
-        </div>
-
-        <div class="unlock-brand-foot">
-          <i class="bi bi-shield-lock" aria-hidden="true"></i>
-          <span>Account access secured by Google</span>
-        </div>
-      </aside>
-
       <div class="unlock-main-panel">
+        <div class="unlock-login-mark">
+          <img src="fastipo.png" alt="FastIPO" width="64" height="64">
+        </div>
         <div class="unlock-heading" id="unlock-heading">
-          <span class="unlock-kicker">WELCOME BACK</span>
-          <h2>Sign in to FastIPO</h2>
-          <p>Use your Google account to open your workspace and access your vault.</p>
+          <h1>Welcome back</h1>
+          <p>Sign in to continue to your FastIPO account.</p>
         </div>
 
         <div class="unlock-form" id="google-login-panel">
@@ -1063,14 +1095,11 @@
           <div id="cloud-auth-status" class="cloud-auth-status" aria-live="polite"></div>
         </div>
 
-        <div class="unlock-note" id="unlock-note">
-          <i class="bi bi-lock-fill" aria-hidden="true"></i>
-          <span>Your Google account controls access to your vault.</span>
-        </div>
+        <div class="unlock-divider"><span>SECURE SIGN IN</span></div>
 
-        <div class="unlock-footer">
+        <div class="unlock-note" id="unlock-note">
           <i class="bi bi-shield-check" aria-hidden="true"></i>
-          <span>Your credentials stay protected</span>
+          <span>Google secures access to your FastIPO workspace.</span>
         </div>
       </div>
     </section>
@@ -1330,9 +1359,14 @@
         section.classList.toggle("page-hidden", !pages.includes(page));
       });
 
-      document.querySelectorAll(".sidebar-link[data-page]").forEach(link => {
+      document.querySelectorAll(".sidebar-link[data-page], .mobile-bottom-link[data-page], .mobile-more-link[data-page]").forEach(link => {
         link.classList.toggle("active", link.dataset.page === page);
       });
+
+      const moreTrigger = document.getElementById("mobile-more-trigger");
+      if (moreTrigger) {
+        moreTrigger.classList.toggle("active", ["openings", "report", "logs"].includes(page));
+      }
 
       const title = pageTitles[page] || "Dashboard";
       const pageTitle = document.querySelector(".page-title");
@@ -1341,19 +1375,11 @@
     }
 
 
-    document.querySelectorAll(".sidebar-link").forEach(link => {
+    document.querySelectorAll(".sidebar-link[data-page], .mobile-bottom-link[data-page], .mobile-more-link[data-page]").forEach(link => {
 
       link.addEventListener("click", () => {
-
-        if (link.dataset.page) {
-          showPage(link.dataset.page);
-        }
-
-        document
-          .querySelectorAll(".sidebar-link")
-          .forEach(item => item.classList.remove("active"));
-
-        link.classList.add("active");
+        showPage(link.dataset.page);
+        closeMobileMore();
 
         if (window.innerWidth <= 991) {
 
@@ -1363,6 +1389,39 @@
 
       });
 
+    });
+
+    const mobileMoreOverlay = document.getElementById("mobile-more-overlay");
+    const mobileMoreTrigger = document.getElementById("mobile-more-trigger");
+
+    function closeMobileMore() {
+      if (!mobileMoreOverlay || !mobileMoreTrigger) return;
+      mobileMoreOverlay.classList.remove("is-open");
+      mobileMoreOverlay.setAttribute("aria-hidden", "true");
+      mobileMoreTrigger.setAttribute("aria-expanded", "false");
+    }
+
+    function openMobileMore() {
+      if (!mobileMoreOverlay || !mobileMoreTrigger) return;
+      mobileMoreOverlay.setAttribute("aria-hidden", "false");
+      mobileMoreTrigger.setAttribute("aria-expanded", "true");
+      requestAnimationFrame(() => mobileMoreOverlay.classList.add("is-open"));
+    }
+
+    mobileMoreTrigger?.addEventListener("click", () => {
+      if (mobileMoreTrigger.getAttribute("aria-expanded") === "true") {
+        closeMobileMore();
+      } else {
+        openMobileMore();
+      }
+    });
+
+    mobileMoreOverlay?.querySelectorAll("[data-close-more]").forEach(button => {
+      button.addEventListener("click", closeMobileMore);
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeMobileMore();
     });
 
     showPage("dashboard");
