@@ -3040,8 +3040,9 @@ select.custom-input {
   }
 
   .application-report-header-controls {
-    align-items: stretch;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 88px;
+    align-items: end;
     width: 100%;
   }
 
@@ -3050,13 +3051,226 @@ select.custom-input {
 
     min-width: 0;
 
-    width: 100%;
+    width: auto;
 
   }
 
   .application-report-list {
 
-    padding: 15px;
+    padding: 10px 12px;
+
+  }
+
+  .application-report-table {
+
+    display: block;
+
+    width: 100%;
+
+    min-width: 0;
+
+    overflow: visible;
+
+    border: 0;
+
+    border-radius: 0;
+
+    background: transparent;
+
+  }
+
+  .application-report-table thead {
+
+    display: none;
+
+  }
+
+  .application-report-table tbody {
+
+    display: grid;
+
+    gap: 8px;
+
+  }
+
+  .application-report-table tbody tr {
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: var(--surface);
+
+  }
+
+  .application-report-table tbody td {
+
+    display: none;
+
+    min-width: 0;
+
+    padding: 10px 12px;
+
+    border: 0;
+
+    font-size: 12px;
+
+  }
+
+  .application-report-table tbody td:nth-child(1),
+  .application-report-table tbody td:nth-child(5),
+  .application-report-table tbody td:nth-child(6) {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 3px;
+
+  }
+
+  .application-report-table tbody td:nth-child(1) {
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+
+    align-items: baseline;
+
+    column-gap: 8px;
+
+    grid-column: 1 / -1;
+
+    border-bottom: 1px solid var(--border-light);
+
+  }
+
+  .application-report-table tbody td:nth-child(5) {
+
+    grid-column: 1 / 2;
+
+  }
+
+  .application-report-table tbody td:nth-child(6) {
+
+    grid-column: 2 / 3;
+
+  }
+
+  .application-report-table tbody td:nth-child(1)::before,
+  .application-report-table tbody td:nth-child(5)::before,
+  .application-report-table tbody td:nth-child(6)::before {
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+  }
+
+  .application-report-table tbody td:nth-child(1)::before {
+
+    content: none;
+
+  }
+
+  .application-report-table tbody td:nth-child(5)::before {
+
+    content: "Account";
+
+  }
+
+  .application-report-table tbody td:nth-child(6)::before {
+
+    content: "Status";
+
+  }
+
+  .application-report-company {
+
+    display: block;
+
+    grid-column: 1;
+
+    grid-row: 2;
+
+    color: var(--text);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    overflow-wrap: anywhere;
+
+  }
+
+  .application-report-company::before {
+
+    content: "Company";
+
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+  }
+
+  .application-report-script {
+
+    grid-column: 2;
+
+    grid-row: 2;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+
+  }
+
+  .application-report-script::before {
+
+    content: "Script";
+
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+  }
+
+  .application-report-account,
+  .application-report-reason {
+
+    overflow-wrap: anywhere;
 
   }
 
@@ -3328,7 +3542,7 @@ select.custom-input {
 
   .application-report-table {
 
-    min-width: 760px;
+    min-width: 0;
 
   }
 
