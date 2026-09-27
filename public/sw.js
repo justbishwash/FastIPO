@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fastipo-shell-v7';
+const CACHE_NAME = 'fastipo-shell-v8';
 const LEGACY_CACHE_PREFIX = 'meroshare-shell-';
 const SHELL_FILES = [
   './index.html',

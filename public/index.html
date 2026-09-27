@@ -1107,6 +1107,32 @@
   </div>
 
 
+  <div class="modal fade" id="delete-account-modal" tabindex="-1" aria-labelledby="delete-account-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content professional-modal delete-account-modal">
+        <div class="modal-header">
+          <div class="modal-title-wrapper">
+            <div class="modal-icon delete-account-icon">
+              <i class="bi bi-trash3-fill" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h5 class="modal-title" id="delete-account-title">Delete account?</h5>
+              <span>This action cannot be undone</span>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="delete-account-message">Remove <strong id="delete-account-name"></strong> from your saved accounts?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light modal-cancel-btn" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirm-delete-account-btn">Delete account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- =========================================================
        EDIT ACCOUNT MODAL
   ========================================================== -->

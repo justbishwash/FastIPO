@@ -11,6 +11,7 @@ let primaryMeroShareClient = null;
 const openingDetailsCache = new Map();
 let minimumKittaRequestId = 0;
 let pendingAccount = null;
+let pendingAccountDeletionIndex = null;
 let applicationReportState = {
   all: [],
   page: 1,
@@ -1091,23 +1092,42 @@ async function updateMinimumKitta() {
 }
 
 window.removeAccount = function(idx) {
+  const account = vault[idx];
+  if (!account) return;
+  pendingAccountDeletionIndex = idx;
+  document.getElementById('delete-account-name').textContent = account.name || account.username;
+  bootstrap.Modal.getOrCreateInstance(document.getElementById('delete-account-modal')).show();
+};
+
+async function confirmAccountDeletion() {
+  const idx = pendingAccountDeletionIndex;
   const removedAccount = vault[idx];
   if (!removedAccount) return;
+
   const accountName = removedAccount.name || removedAccount.username;
-  if (!window.confirm(`Delete ${accountName} from your saved accounts?`)) return;
+  const confirmButton = document.getElementById('confirm-delete-account-btn');
+  const deleteModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('delete-account-modal'));
+  confirmButton.disabled = true;
+  pendingAccountDeletionIndex = null;
   vault.splice(idx, 1);
   if (vault.length && !vault.some((account) => account.primary)) vault[0].primary = true;
-  saveVault().then(() => {
+
+  try {
+    await saveVault();
+    deleteModal.hide();
     renderAccounts();
     loadApplicationReport();
     showApplicationToast('success', 'Account deleted', `${accountName} was deleted.`);
-  }).catch((error) => {
+  } catch (error) {
     vault.splice(idx, 0, removedAccount);
     renderAccounts();
     loadApplicationReport();
+    deleteModal.hide();
     showApplicationToast('error', 'Account not removed', error.message);
-  });
-};
+  } finally {
+    confirmButton.disabled = false;
+  }
+}
 
 function setAccountModalStage(stage) {
   document.querySelectorAll('.account-credential-field').forEach((field) => {
@@ -1346,6 +1366,7 @@ document.querySelector('.user-profile').addEventListener('click', (event) => {
   menu.hidden = !menu.hidden;
 });
 document.getElementById('logout-btn').addEventListener('click', signOutUser);
+document.getElementById('confirm-delete-account-btn').addEventListener('click', confirmAccountDeletion);
 document.addEventListener('click', (event) => {
   if (!event.target.closest('.user-profile')) document.getElementById('user-menu').hidden = true;
 });

@@ -4435,3 +4435,31 @@ select.custom-input {
   background: #fef2f2;
 
 }
+
+.delete-account-icon {
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+}
+
+.delete-account-message {
+
+  margin: 0;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+}
+
+.delete-account-message strong {
+
+  color: var(--text);
+
+  font-weight: 700;
+
+}
