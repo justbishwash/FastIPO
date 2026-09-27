@@ -1155,6 +1155,85 @@ body {
 
 }
 
+.searchable-picker-options {
+
+  position: absolute;
+
+  top: calc(100% + 4px);
+
+  left: 0;
+
+  right: 0;
+
+  z-index: 20;
+
+  max-height: 240px;
+
+  overflow-y: auto;
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  background: var(--surface);
+
+  box-shadow: var(--shadow-md);
+
+  -webkit-overflow-scrolling: touch;
+
+}
+
+.searchable-picker-options[hidden] {
+
+  display: none;
+
+}
+
+.searchable-picker-option {
+
+  display: block;
+
+  width: 100%;
+
+  padding: 10px 12px 10px 36px;
+
+  border: 0;
+
+  border-bottom: 1px solid var(--border-light);
+
+  background: var(--surface);
+
+  color: var(--text);
+
+  text-align: left;
+
+  font: inherit;
+
+}
+
+.searchable-picker-option:last-child {
+
+  border-bottom: 0;
+
+}
+
+.searchable-picker-option:hover,
+.searchable-picker-option:focus {
+
+  outline: 0;
+
+  background: var(--primary-light);
+
+}
+
+.searchable-picker-empty {
+
+  padding: 10px 12px 10px 36px;
+
+  color: var(--text-secondary);
+
+}
+
 
 .input-wrapper > i {
 
@@ -3284,7 +3363,7 @@ select.custom-input {
 
 .account-modal-content {
 
-  overflow: hidden;
+  overflow: visible;
 
   border: 0;
 
@@ -3292,8 +3371,16 @@ select.custom-input {
 
 }
 
+.modal-dialog-scrollable > .modal-content.account-modal-content {
+
+  overflow: visible;
+
+}
+
 
 .account-modal-content #account-form {
+
+  overflow: visible;
 
   margin: 0;
 

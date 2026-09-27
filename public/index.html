@@ -539,20 +539,25 @@
                     DP ID
                   </label>
 
-                  <div class="input-wrapper">
+                  <div class="input-wrapper searchable-picker">
 
                     <i class="bi bi-bank"></i>
 
                     <input
-                      type="text"
+                      type="search"
                       id="acc-dp"
                       class="form-control custom-input"
-                      list="dp-list"
-                      placeholder="Search DP..."
+                      placeholder="Search DP name or code..."
+                      autocomplete="off"
+                      spellcheck="false"
+                      role="combobox"
+                      aria-autocomplete="list"
+                      aria-haspopup="listbox"
+                      aria-expanded="false"
+                      aria-controls="acc-dp-options"
                       required
                     >
-
-                    <datalist id="dp-list"></datalist>
+                    <div id="acc-dp-options" class="searchable-picker-options" role="listbox" hidden></div>
 
                   </div>
 
@@ -778,20 +783,25 @@
                     Target Script
                   </label>
 
-                  <div class="input-wrapper">
+                  <div class="input-wrapper searchable-picker">
 
                     <i class="bi bi-bar-chart"></i>
 
                     <input
-                      type="text"
+                      type="search"
                       id="apply-script"
                       class="form-control custom-input"
-                      list="opening-script-list"
-                      placeholder="Search an opening..."
+                      placeholder="Search script or company..."
+                      autocomplete="off"
+                      spellcheck="false"
+                      role="combobox"
+                      aria-autocomplete="list"
+                      aria-haspopup="listbox"
+                      aria-expanded="false"
+                      aria-controls="apply-script-options"
                       required
                     >
-
-                    <datalist id="opening-script-list"></datalist>
+                    <div id="apply-script-options" class="searchable-picker-options" role="listbox" hidden></div>
 
                   </div>
 
@@ -1268,7 +1278,7 @@
     <script src="firebase-config.js"></script>
 
   <!-- Your existing application logic -->
-  <script src="app.js?v=connection-status-1"></script>
+  <script src="app.js?v=searchable-pickers-1"></script>
   <script src="pwa.js"></script>
 
 

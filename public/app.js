@@ -750,18 +750,100 @@ async function saveVault() {
   log("[OK] Vault saved to Firestore.");
 }
 
+function closeSearchablePicker(input) {
+  const options = document.getElementById(`${input.id}-options`);
+  options.hidden = true;
+  input.setAttribute('aria-expanded', 'false');
+}
+
+function renderSearchablePicker(input) {
+  const optionsList = document.getElementById(`${input.id}-options`);
+  const query = input.value.trim().toLowerCase();
+  const matches = (input.searchablePickerOptions || []).filter((option) => (
+    option.searchText.toLowerCase().includes(query)
+  ));
+
+  optionsList.replaceChildren();
+  if (!matches.length) {
+    const empty = document.createElement('div');
+    empty.className = 'searchable-picker-empty';
+    empty.textContent = 'No matches';
+    optionsList.appendChild(empty);
+  } else {
+    matches.forEach((option) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'searchable-picker-option';
+      button.setAttribute('role', 'option');
+      button.textContent = option.label;
+      button.addEventListener('click', () => {
+        input.value = option.inputValue || option.value;
+        input.dataset.selectedValue = option.value;
+        input.setCustomValidity('');
+        closeSearchablePicker(input);
+        input.dataset.skipPickerOpen = 'true';
+        input.focus();
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+      optionsList.appendChild(button);
+    });
+  }
+
+  optionsList.hidden = false;
+  input.setAttribute('aria-expanded', 'true');
+}
+
+function initializeSearchablePicker(inputId) {
+  const input = document.getElementById(inputId);
+  const picker = input.closest('.searchable-picker');
+  input.searchablePickerOptions = [];
+
+  input.addEventListener('focus', () => {
+    if (input.dataset.skipPickerOpen) {
+      delete input.dataset.skipPickerOpen;
+      return;
+    }
+    renderSearchablePicker(input);
+  });
+  input.addEventListener('input', () => {
+    input.dataset.selectedValue = '';
+    input.setCustomValidity('Choose an option from the results.');
+    renderSearchablePicker(input);
+  });
+  input.addEventListener('keydown', (event) => {
+    const firstOption = document.getElementById(`${input.id}-options`).querySelector('button');
+    if (event.key === 'ArrowDown' && firstOption) {
+      event.preventDefault();
+      firstOption.focus();
+    } else if (event.key === 'Escape') {
+      closeSearchablePicker(input);
+    } else if (event.key === 'Enter' && firstOption) {
+      event.preventDefault();
+      firstOption.click();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (!picker.contains(event.target)) closeSearchablePicker(input);
+  });
+}
+
+function setSearchablePickerOptions(inputId, options) {
+  const input = document.getElementById(inputId);
+  input.searchablePickerOptions = options;
+  input.value = '';
+  input.dataset.selectedValue = '';
+  input.setCustomValidity('');
+}
+
 async function loadDPs() {
   try {
     const res = await fetch(`${BASE_URL}/capital/`);
     const data = await res.json();
-    const datalist = document.getElementById('dp-list');
-    datalist.innerHTML = '';
-    data.forEach(dp => {
-      const option = document.createElement('option');
-      option.value = dp.code;
-      option.label = `${dp.name} (${dp.code})`; // Shows as "SUN SECURITIES PVT LTD (19300)"
-      datalist.appendChild(option);
-    });
+    setSearchablePickerOptions('acc-dp', data.map((dp) => ({
+      value: dp.code,
+      label: `${dp.name} (${dp.code})`,
+      searchText: `${dp.name} ${dp.code}`
+    })));
     log("[OK] DP list loaded.");
   } catch (e) {
     log("[ERROR] Failed to load DP list. Check the proxy URL.");
@@ -933,15 +1015,17 @@ window.setPrimaryAccount = async function(idx) {
 };
 
 function populateOpeningPicker(openings) {
-  const picker = document.getElementById('opening-script-list');
-  if (!picker) return;
   availableOpenings = openings;
-
-  picker.innerHTML = openings.map((opening) => {
+  setSearchablePickerOptions('apply-script', openings.map((opening) => {
     const script = opening.scrip || '';
     const company = opening.companyName || 'Unknown company';
-    return `<option value="${company}">${script}</option>`;
-  }).join('');
+    return {
+      value: script,
+      inputValue: script,
+      label: `${script || 'Unknown script'} - ${company}`,
+      searchText: `${script} ${company}`
+    };
+  }));
 }
 
 function findOpeningForInput(value) {
@@ -1059,6 +1143,10 @@ function resetAccountModal() {
   verifyButton.innerHTML = '<i class="bi bi-shield-check"></i> Verify Credentials';
   document.getElementById('acc-bank-name').value = '';
   document.getElementById('acc-bank-account').value = '';
+  const dpPicker = document.getElementById('acc-dp');
+  dpPicker.value = '';
+  dpPicker.dataset.selectedValue = '';
+  dpPicker.setCustomValidity('');
 }
 
 document.getElementById('add-account-modal').addEventListener('show.bs.modal', resetAccountModal);
@@ -1066,7 +1154,7 @@ document.getElementById('add-account-modal').addEventListener('show.bs.modal', r
 document.getElementById('verify-account-btn').addEventListener('click', async () => {
   const username = document.getElementById('acc-username').value.trim();
   const password = document.getElementById('acc-password').value;
-  const dpId = document.getElementById('acc-dp').value.trim();
+  const dpId = document.getElementById('acc-dp').dataset.selectedValue || '';
   const verifyButton = document.getElementById('verify-account-btn');
 
   if (!dpId || !username || !password) {
@@ -1263,6 +1351,8 @@ document.addEventListener('click', (event) => {
 });
 initCloudVault();
 checkMeroShareConnection();
+initializeSearchablePicker('acc-dp');
+initializeSearchablePicker('apply-script');
 loadDPs();
 
 document.getElementById('apply-account').addEventListener('change', function() {
@@ -1274,7 +1364,6 @@ document.getElementById('apply-account').addEventListener('change', function() {
   }
 });
 
-document.getElementById('apply-script').addEventListener('input', updateMinimumKitta);
 document.getElementById('apply-script').addEventListener('change', updateMinimumKitta);
 
 document.getElementById('apply-all-accounts').addEventListener('change', function() {
