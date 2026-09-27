@@ -944,28 +944,26 @@ function renderAccounts() {
     return `
       <tr>
         <td>
-          <div class="account-table-name">${displayName}</div>
-          <div class="account-table-subtext">BOID: ${acc.boid || 'N/A'}</div>
+          <div class="account-table-heading">
+            <div class="account-table-name">${displayName}</div>
+            ${isPrimary ? '<span class="account-primary-status">Primary</span>' : ''}
+          </div>
+          <div class="account-table-subtext">${acc.boid || 'N/A'}</div>
         </td>
-        <td>
+        <td data-label="Password Expiry">
           <span class="account-expiry-pill ${passwordExpiryText.includes('expired') ? 'expired' : ''}">${passwordExpiryText}</span>
         </td>
-        <td>
+        <td data-label="Demat Expiry">
           <span class="account-expiry-pill ${dematExpiryText.includes('expired') ? 'expired' : ''}">${dematExpiryText}</span>
         </td>
-        <td>
+        <td data-label="MeroShare Expiry">
           <span class="account-expiry-pill ${meroShareExpiryText.includes('expired') ? 'expired' : ''}">${meroShareExpiryText}</span>
         </td>
-        <td>
+        <td data-label="Actions">
           <div class="account-table-actions">
-            <button class="btn btn-sm ${isPrimary ? 'btn-primary' : 'btn-outline-primary'} account-action-btn" onclick="setPrimaryAccount(${idx})" title="${isPrimary ? 'Primary account' : 'Set as primary'}">
-              <i class="bi ${isPrimary ? 'bi-star-fill' : 'bi-star'}"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-primary account-action-btn" onclick="editAccount(${idx})" title="Edit account">
-              <i class="bi bi-pencil-square"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-danger account-action-btn" onclick="removeAccount(${idx})" title="Remove account">
-              <i class="bi bi-trash3"></i>
+            ${!isPrimary ? `<button class="btn btn-sm btn-outline-primary account-primary-btn" onclick="setPrimaryAccount(${idx})">Set as primary</button>` : ''}
+            <button class="btn btn-sm btn-outline-danger account-action-btn" onclick="removeAccount(${idx})" title="Delete account" aria-label="Delete ${displayName}">
+              <i class="bi bi-trash3-fill" aria-hidden="true"></i>
             </button>
           </div>
         </td>
@@ -1095,12 +1093,14 @@ async function updateMinimumKitta() {
 window.removeAccount = function(idx) {
   const removedAccount = vault[idx];
   if (!removedAccount) return;
+  const accountName = removedAccount.name || removedAccount.username;
+  if (!window.confirm(`Delete ${accountName} from your saved accounts?`)) return;
   vault.splice(idx, 1);
   if (vault.length && !vault.some((account) => account.primary)) vault[0].primary = true;
   saveVault().then(() => {
     renderAccounts();
     loadApplicationReport();
-    showApplicationToast('success', 'Account removed', `${removedAccount.name || removedAccount.username} was removed.`);
+    showApplicationToast('success', 'Account deleted', `${accountName} was deleted.`);
   }).catch((error) => {
     vault.splice(idx, 0, removedAccount);
     renderAccounts();

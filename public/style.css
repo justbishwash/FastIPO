@@ -26,8 +26,8 @@
   --border-light: #edf0f5;
 
   --text: #111827;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
+  --text-secondary: #465366;
+  --text-muted: #657284;
 
   --success: #16a34a;
   --success-light: #ecfdf3;
@@ -1282,7 +1282,9 @@ body {
 
 .custom-input::placeholder {
 
-  color: #b1bac7;
+  color: var(--text-muted);
+
+  opacity: 1;
 
 }
 
@@ -1430,6 +1432,13 @@ select.custom-input {
   color: var(--heading);
 }
 
+.account-table-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .account-table-subtext {
   color: var(--text-muted);
   font-size: 11px;
@@ -1459,6 +1468,40 @@ select.custom-input {
   justify-content: flex-end;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.account-primary-btn {
+
+  min-height: 34px;
+
+  padding: 0 10px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+}
+
+.account-primary-status {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  color: #15803d;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  white-space: nowrap;
+
 }
 
 .account-action-btn {
@@ -2145,7 +2188,7 @@ select.custom-input {
 .cloud-auth-status {
   min-height: 18px;
   margin-top: 10px;
-  color: #778493;
+  color: var(--text-muted);
   font-size: 11px;
   line-height: 1.5;
   text-align: left;
@@ -2641,6 +2684,147 @@ select.custom-input {
 
   }
 
+  .accounts-list {
+
+    overflow: visible;
+
+  }
+
+  .accounts-table {
+
+    display: block;
+
+    min-width: 0;
+
+    border-collapse: separate;
+
+    background: transparent;
+
+  }
+
+  .accounts-table thead {
+
+    display: none;
+
+  }
+
+  .accounts-table tbody {
+
+    display: grid;
+
+    gap: 12px;
+
+    padding: 12px;
+
+  }
+
+  .accounts-table tbody tr {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: var(--surface);
+
+  }
+
+  .accounts-table tbody td,
+  .accounts-table tbody td:first-child {
+
+    display: flex;
+
+    min-width: 0;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 7px;
+
+    padding: 12px;
+
+    border-bottom: 1px solid var(--border-light);
+
+  }
+
+  .accounts-table tbody td::before {
+
+    content: attr(data-label);
+
+    color: var(--text-secondary);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+  }
+
+  .accounts-table .account-expiry-pill {
+
+    display: block;
+
+    max-width: 100%;
+
+    padding: 0;
+
+    border-radius: 0;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 11px;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+  }
+
+  .accounts-table .account-expiry-pill.expired {
+
+    background: transparent;
+
+    color: #dc2626;
+
+  }
+
+  .accounts-table tbody td:first-child,
+  .accounts-table tbody td:last-child {
+
+    grid-column: 1 / -1;
+
+  }
+
+  .accounts-table tbody td:last-child {
+
+    border-bottom: 0;
+
+  }
+
+  .account-table-name,
+  .account-table-subtext {
+
+    overflow-wrap: anywhere;
+
+  }
+
+  .account-table-actions {
+
+    justify-content: flex-start;
+
+  }
+
 
   .app-footer {
 
@@ -2733,7 +2917,7 @@ select.custom-input {
 
   .accounts-table {
 
-    min-width: 700px;
+    min-width: 0;
 
   }
 
@@ -3287,7 +3471,7 @@ select.custom-input {
 
   min-height: 18px;
   margin-top: 10px;
-  color: #778493;
+  color: var(--text-muted);
   font-size: 11px;
   line-height: 1.5;
   text-align: left;
@@ -3365,6 +3549,8 @@ select.custom-input {
 
   overflow: visible;
 
+  background: var(--background);
+
   border: 0;
 
   border-radius: 14px;
@@ -3381,6 +3567,8 @@ select.custom-input {
 .account-modal-content #account-form {
 
   overflow: visible;
+
+  background: transparent;
 
   margin: 0;
 
@@ -3438,8 +3626,6 @@ select.custom-input {
   gap: 8px;
 
   color: var(--text-muted);
-
-  opacity: .7;
 
 }
 
@@ -3695,7 +3881,7 @@ select.custom-input {
 
 .pwa-install-content > span,
 .pwa-ios-help {
-  color: #64748b;
+  color: var(--text-secondary);
   font-size: 11px;
 }
 
